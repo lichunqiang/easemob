@@ -13,6 +13,7 @@ use light\Easemob\Providers\FileProvider;
 use light\Easemob\Providers\GroupProvider;
 use light\Easemob\Providers\MessageProvider;
 use light\Easemob\Providers\UserProvider;
+use light\Easemob\Rest\Rest;
 use light\Easemob\Support\Log;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
@@ -22,6 +23,8 @@ use Pimple\ServiceProviderInterface;
 
 /**
  * Class Easemob
+ *
+ * @property \light\Easemob\Rest\User user
  *
  * @package light\Easemob
  */
@@ -151,5 +154,42 @@ class Easemob extends Container
         }
 
         Log::setLogger($logger);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this->offsetGet($name);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value)
+    {
+        $this->offsetSet($name, $value);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return $this->offsetExists($name);
+    }
+
+    /**
+     * @param string $name
+     */
+    public function __unset($name)
+    {
+        $this->offsetUnset($name);
     }
 }
