@@ -176,7 +176,7 @@ abstract class Attribute extends Collection
     }
 
     /**
-     * Check requireds attributes.
+     * Check required attributes.
      *
      * @throws InvalidArgumentException
      */

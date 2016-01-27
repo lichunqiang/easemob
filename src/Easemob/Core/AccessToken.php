@@ -3,18 +3,15 @@
 namespace light\Easemob\Core;
 
 use light\Easemob\Exception\HttpException;
+use light\Easemob\Exception\InvalidArgumentException;
 use light\Easemob\Support\Log;
-use yii\base\InvalidConfigException;
-use yii\base\Object;
-use yii\caching\Cache;
-use yii\di\Instance;
 
 /**
  * 获取管理员Token.
  *
  *
  */
-class AccessToken extends Object
+class AccessToken
 {
     /**
      * @var string client id of app
@@ -47,16 +44,17 @@ class AccessToken extends Object
         if (null === $this->clientId
             || null === $this->clientSecret) {
 
-            throw new InvalidConfigException('Ether $clientId or $clientSecret should be speicied.');
+            throw new InvalidArgumentException('Ether $clientId or $clientSecret should be speicied.');
         }
-
-        $this->cache = Instance::ensure($this->cache, Cache::class);
     }
 
     /**
      * Get the access token
      *
+     * @param bool $forceRefresh
+     *
      * @return string
+     * @throws HttpException
      */
     public function getToken($forceRefresh = false)
     {
@@ -81,6 +79,8 @@ class AccessToken extends Object
      * Internal fetch token logic
      *
      * @return array
+     * @throws HttpException
+     * @throws \light\Easemob\Exception\HttpException
      */
     protected function getTokenFromServer()
     {

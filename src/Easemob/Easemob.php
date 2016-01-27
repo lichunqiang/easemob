@@ -2,9 +2,14 @@
 
 namespace light\Easemob;
 
-use yii\di\ServiceLocator;
+use Pimple\Container;
 
-class Easemob extends ServiceLocator
+/**
+ * Class Easemob
+ *
+ * @package light\Easemob
+ */
+class Easemob extends Container
 {
     const BASE_URL = 'https://a1.easemob.com';
 
@@ -31,7 +36,7 @@ class Easemob extends ServiceLocator
         $clientId, $clientSecret,
         $config = []
     ) {
-
+        parent::__construct();
         $this->enterpriseId = $enterpriseId;
         $this->appId = $appId;
 
@@ -40,8 +45,6 @@ class Easemob extends ServiceLocator
 
         //init api url
         $this->api = self::BASE_URL . '/' . $enterpriseId . '/' . $appId . '/';
-
-        parent::__construct($config);
     }
 
     /**

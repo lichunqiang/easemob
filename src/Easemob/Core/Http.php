@@ -7,15 +7,15 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
+use light\Easemob\Exception\HttpException;
 use light\Easemob\Support\Log;
 use Psr\Http\Message\ResponseInterface;
-use yii\base\Object;
 
-class Http extends Object
+class Http
 {
     public $baseUri;
     /**
-     * @var GuzzleHttp\Client
+     * @var \GuzzleHttp\Client
      */
     protected $client;
     /**
@@ -40,7 +40,7 @@ class Http extends Object
     /**
      * Get http client
      *
-     * @return GuzzleHttp\Client
+     * @return \GuzzleHttp\Client
      */
     public function getClient()
     {
@@ -144,12 +144,12 @@ class Http extends Object
      * Upload file.
      *
      * @param string $url
-     * @param array  $files
-     * @param array  $form
+     * @param array $files
+     * @param array $form
+     *
+     * @param array $queries
      *
      * @return array|bool
-     *
-     * @throws HttpException
      */
     public function upload($url, array $files = [], array $form = [], array $queries = [])
     {
@@ -174,7 +174,10 @@ class Http extends Object
      *
      * @param  string $body
      *
+     * @param bool $throws
+     *
      * @return array
+     * @throws HttpException
      */
     public function parseJSON($body, $throws = true)
     {

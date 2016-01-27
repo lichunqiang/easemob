@@ -2,7 +2,7 @@
 
 namespace light\Easemob\Exception;
 
-class InvalidArgumentException extends EasemobException
+class InvalidArgumentException extends \InvalidArgumentException
 {
 
 }

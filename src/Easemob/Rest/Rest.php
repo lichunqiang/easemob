@@ -7,9 +7,8 @@ use light\Easemob\Exception\EasemobException;
 use light\Easemob\Support\Log;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use yii\base\Object;
 
-abstract class Rest extends Object
+abstract class Rest
 {
     /**
      * @var Http
@@ -17,7 +16,7 @@ abstract class Rest extends Object
     public $http;
 
     /**
-     * @var light\Easemob\Core\AccessToken
+     * @var \light\Easemob\Core\AccessToken
      */
     public $token;
 
@@ -29,9 +28,11 @@ abstract class Rest extends Object
     /**
      * Parse response
      *
-     * @param  Response $response
+     * @param Response|ResponseInterface $response
      *
      * @return mixed
+     * @throws EasemobException
+     * @throws \light\Easemob\Exception\HttpException
      */
     public function parseResponse(ResponseInterface $response)
     {
@@ -58,7 +59,7 @@ abstract class Rest extends Object
     /**
      * Attache access token to request query.
      *
-     * @return Closure
+     * @return \Closure
      */
     public function accessTokenMiddleware()
     {

@@ -2,15 +2,18 @@
 
 namespace light\Easemob\Support;
 
-use light\Easemob\Adpter\Logger;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Yii;
 
 /**
  * Log
  */
 class Log
 {
+    /**
+     * @var LoggerInterface
+     */
     protected static $_logger;
 
     public static function setLogger(LoggerInterface $logger)
@@ -35,8 +38,8 @@ class Log
 
     public static function createDefaultLogger()
     {
-        $logger = new Logger(Yii::getAlias('@runtime/logs/easemob.log'));
-
+        $logger = new Logger('easemob');
+        $logger->pushHandler(new ErrorLogHandler());
         return $logger;
     }
 }
