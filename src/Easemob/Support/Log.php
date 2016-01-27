@@ -8,6 +8,9 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Log
+ *
+ * @method static debug($message, array $context)
+ * @method static error($message, array $context)
  */
 class Log
 {

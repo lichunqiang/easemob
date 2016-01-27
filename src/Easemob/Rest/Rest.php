@@ -2,6 +2,7 @@
 
 namespace light\Easemob\Rest;
 
+use light\Easemob\Core\AccessToken;
 use light\Easemob\Core\Http;
 use light\Easemob\Exception\EasemobException;
 use light\Easemob\Support\Log;
@@ -13,22 +14,56 @@ abstract class Rest
     /**
      * @var Http
      */
-    public $http;
-
+    protected $http;
     /**
      * @var \light\Easemob\Core\AccessToken
      */
-    public $token;
+    protected $accessToken;
 
-    public function init()
+    public function __construct(AccessToken $accessToken, Http $http)
     {
+        $this->accessToken = $accessToken;
+        $this->http = $http;
+
         $this->registerHttpMiddleware();
+    }
+
+    /**
+     * @return Http
+     */
+    public function getHttp()
+    {
+        return $this->http;
+    }
+
+    /**
+     * @param Http $http
+     */
+    public function setHttp($http)
+    {
+        $this->http = $http;
+    }
+
+    /**
+     * @return AccessToken
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @param AccessToken $accessToken
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
     }
 
     /**
      * Parse response
      *
-     * @param Response|ResponseInterface $response
+     * @param ResponseInterface $response
      *
      * @return mixed
      * @throws EasemobException
@@ -66,11 +101,11 @@ abstract class Rest
         return function (callable $handler) {
             return function (RequestInterface $request, array $options) use ($handler) {
 
-                if (!$this->token->getToken()) {
+                if (!$this->accessToken->getToken()) {
                     return $handler($request, $options);
                 }
 
-                $request = $request->withHeader('Authorization', 'Bearer ' . $this->token->getToken());
+                $request = $request->withHeader('Authorization', 'Bearer ' . $this->accessToken->getToken());
 
                 return $handler($request, $options);
             };

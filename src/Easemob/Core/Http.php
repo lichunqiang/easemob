@@ -13,7 +13,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class Http
 {
-    public $baseUri;
+    /**
+     * @var string The base request url.
+     */
+    protected $baseUri;
     /**
      * @var \GuzzleHttp\Client
      */
@@ -22,6 +25,11 @@ class Http
      * @var array The middlewares.
      */
     protected $middlewares = [];
+
+    public function __construct($baseUri)
+    {
+        $this->baseUri = $baseUri;
+    }
 
     /**
      * Set http client
@@ -47,7 +55,7 @@ class Http
         if (!($this->client instanceof HttpClient)) {
             $this->client = new HttpClient([
                 'base_uri' => $this->baseUri,
-                'verify' => !YII_DEBUG,
+                'verify' => false,
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',

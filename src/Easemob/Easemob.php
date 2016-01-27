@@ -2,7 +2,23 @@
 
 namespace light\Easemob;
 
+use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\FilesystemCache;
+use light\Easemob\Core\AccessToken;
+use light\Easemob\Core\Config;
+use light\Easemob\Core\Http;
+use light\Easemob\Providers\ChatProvider;
+use light\Easemob\Providers\ChatRoomProvider;
+use light\Easemob\Providers\FileProvider;
+use light\Easemob\Providers\GroupProvider;
+use light\Easemob\Providers\MessageProvider;
+use light\Easemob\Providers\UserProvider;
+use light\Easemob\Support\Log;
+use Monolog\Handler\NullHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 
 /**
  * Class Easemob
@@ -14,82 +30,126 @@ class Easemob extends Container
     const BASE_URL = 'https://a1.easemob.com';
 
     /**
-     * @var string 企业ID
+     * Core service providers
+     *
+     * @var array
      */
-    protected $enterpriseId;
-    /**
-     * @var string APP名称
-     */
-    protected $appId;
-
-    protected $clientId;
-
-    protected $clientSecret;
+    protected $coreProviders = [
+        UserProvider::class,
+        ChatProvider::class,
+        ChatRoomProvider::class,
+        FileProvider::class,
+        GroupProvider::class,
+        MessageProvider::class,
+    ];
 
     /**
      * @var string
      */
-    public $api;
+    protected $api;
 
-    public function __construct(
-        $enterpriseId, $appId,
-        $clientId, $clientSecret,
-        $config = []
-    ) {
+    public function __construct(array $config)
+    {
         parent::__construct();
-        $this->enterpriseId = $enterpriseId;
-        $this->appId = $appId;
 
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
+        $this['config'] = function () use ($config) {
+            return new Config($config);
+        };
 
         //init api url
-        $this->api = self::BASE_URL . '/' . $enterpriseId . '/' . $appId . '/';
+        $this->api = self::BASE_URL . '/' . $this['config']['enterpriseId'] . '/' . $this['config']['appId'] . '/';
+
+        $this->registerCoreProviders();
+        $this->registerProviders();
+        $this->initializeLogger();
+
+        Log::debug('Configuration:', ['config' => $this['config']]);
     }
 
     /**
-     * {@inheritdoc}
+     * Get all providers.
+     *
+     * @return array
      */
-    public function init()
+    public function getProviders()
     {
-        //set base components
-        $this->set('http', [
-            'class' => Core\Http::class,
-            'baseUri' => $this->api,
-        ]);
+        return $this->coreProviders;
+    }
 
-        $this->set('token', [
-            'class' => Core\AccessToken::class,
-            'clientId' => $this->clientId,
-            'clientSecret' => $this->clientSecret,
-            'http' => $this->get('http'),
-            'cache' => [
-                'class' => 'yii\caching\FileCache',
-            ],
-        ]);
+    /**
+     * @param ServiceProviderInterface $provider
+     *
+     * @return $this
+     */
+    public function setProvider(ServiceProviderInterface $provider)
+    {
+        $this->coreProviders[] = $provider;
 
-        $components = $this->coreComponents();
-        foreach ($components as $id => $defination) {
-            $defination['http'] = $this->get('http');
-            $defination['token'] = $this->get('token');
-            $this->set($id, $defination);
+        return $this;
+    }
+
+    /**
+     * @param array $providers
+     */
+    public function setProviders(array $providers)
+    {
+        $this->coreProviders = [];
+
+        foreach ($providers as $provider) {
+            $this->setProvider($provider);
         }
     }
 
     /**
-     * Core components
-     *
-     * @return array
+     * Register providers.
      */
-    protected function coreComponents()
+    protected function registerProviders()
     {
-        return [
-            'user' => ['class' => Rest\User::class],
-            'chat' => ['class' => Rest\Chat::class],
-            'file' => ['class' => Rest\File::class],
-            'group' => ['class' => Rest\Group::class],
-            'message' => ['class' => Rest\Message::class],
-            'chatroom' => ['class' => Rest\ChatRoom::class],
-        ];
+        foreach ($this->coreProviders as $provider) {
+            $this->register(new $provider);
+        }
+    }
+
+    /**
+     * Register core providers.
+     */
+    protected function registerCoreProviders()
+    {
+
+        $this['http'] = function () {
+            return new Http($this->api);
+        };
+
+        $this['cache'] = function () {
+            return new FilesystemCache($this['config']['cachePath'] ?: sys_get_temp_dir());
+        };
+
+        $this['access_token'] = function () {
+            return new AccessToken(
+                $this['config']['clientId'],
+                $this['config']['clientSecret'],
+                $this['http'],
+                $this['cache']
+            );
+        };
+    }
+
+    /**
+     * Init logger
+     */
+    private function initializeLogger()
+    {
+        $logger = new Logger('Easemob');
+
+        if ($this['config']['debug']) {
+            $logger->pushHandler(new NullHandler());
+        } elseif ($logFile = $this['config']['log.file']) {
+            $logger->pushHandler(new StreamHandler(
+                $logFile,
+                $this['config']->get('log.level') ?: Logger::WARNING
+            ));
+        }
+
+        Log::setLogger($logger);
     }
 }
