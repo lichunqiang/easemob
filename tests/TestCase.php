@@ -3,6 +3,7 @@
 namespace tests;
 
 use light\Easemob\Easemob;
+use Monolog\Logger;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +16,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             'appId' => getenv('appId'),
             'clientId' => getenv('clientId'),
             'clientSecret' => getenv('clientSecret'),
-            'debug' => true
+            'log' => [
+                'file' => __DIR__ . '/runtime/easemob.log',
+                'level' => Logger::DEBUG
+            ]
         ]);
     }
 }

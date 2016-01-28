@@ -133,6 +133,9 @@ class AccessToken
             if ($forceRefresh || !$this->token) {
 
                 $token = $this->getTokenFromServer();
+                Log::debug('Renew the access token', [
+                    'token' => $token,
+                ]);
 
                 $this->getCache()->save(
                     $this->cacheKeyPrefix,

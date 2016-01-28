@@ -75,7 +75,7 @@ class Http
      *
      * @param  string $url
      * @param  string $method
-     * @param  array  $options
+     * @param  array $options
      *
      * @return mixed
      */
@@ -89,7 +89,12 @@ class Http
             $response = $this->getClient()->request($method, $url, $options);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            Log::error('Http Exception', ['response' => (string) $response->getBody()]);
+            Log::error('Http Exception', [
+                'uri' => $url,
+                'method' => $method,
+                'response' => (string)$response->getBody(),
+                'request' => (string)$e->getRequest()->getUri(),
+            ]);
         }
 
         return $response;
@@ -99,7 +104,7 @@ class Http
      * Send a get request
      *
      * @param  string $url
-     * @param  array  $options
+     * @param  array $options
      *
      * @return mixed
      */
@@ -112,7 +117,7 @@ class Http
      * Send a post request
      *
      * @param  string $url
-     * @param  array  $options
+     * @param  array $options
      *
      * @return mixed
      */
@@ -126,7 +131,7 @@ class Http
      * Send a delete request
      *
      * @param  string $url
-     * @param  array  $options
+     * @param  array $options
      *
      * @return mixed
      */
@@ -139,7 +144,7 @@ class Http
      * Send a put request
      *
      * @param  string $url
-     * @param  array  $options
+     * @param  array $options
      *
      * @return mixed
      */
