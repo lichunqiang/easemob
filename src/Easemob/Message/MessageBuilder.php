@@ -98,7 +98,7 @@ class MessageBuilder
      *
      * @return $this
      *
-     * @throws InvliadArgumentException
+     * @throws InvalidArgumentException
      */
     public function setTargetType($type)
     {
@@ -122,7 +122,6 @@ class MessageBuilder
         $this->validate($data);
 
         return $data;
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
     protected function validate(&$data)

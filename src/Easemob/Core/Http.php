@@ -157,7 +157,7 @@ class Http
      *
      * @param array $queries
      *
-     * @return array|bool
+     * @return ResponseInterface
      */
     public function upload($url, array $files = [], array $form = [], array $queries = [])
     {

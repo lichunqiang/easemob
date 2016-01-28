@@ -14,8 +14,7 @@
     "monolog/monolog": "^1.17",
     "pimple/pimple": "~3.0",
     "doctrine/cache": "~1.6",
-    "psr/log": "~1.0",
-    "psr/cache": "~1.0"
+    "psr/log": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.8"
@@ -23,6 +22,11 @@
   "autoload": {
     "psr-4": {
       "light\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "tests\\": "tests/"
     }
   }
 }

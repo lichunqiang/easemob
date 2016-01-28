@@ -9,7 +9,7 @@ class Message extends Rest
     /**
      * Send a message
      *
-     * @param  Msg    $msg
+     * @param Msg $msg
      *
      * @return mixed This will return the data field.
      */
@@ -22,12 +22,13 @@ class Message extends Rest
 
     /**
      * 获取历史聊天记录
-     * {@inheritdoc}
      *
-     * @param  [type]  $cursor
+     * @param null|string $cursor
+     * @param null|string $sql
      * @param  integer $limit
      *
-     * @return [type]          [description]
+     * @return array
+     * @throws \light\Easemob\Exception\EasemobException
      */
     public function history($cursor = null, $sql = null, $limit = 20)
     {

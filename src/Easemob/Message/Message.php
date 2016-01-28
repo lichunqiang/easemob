@@ -2,6 +2,7 @@
 
 namespace light\Easemob\Message;
 
+use light\Easemob\Exception\InvalidArgumentException;
 use light\Easemob\Support\Arr;
 use light\Easemob\Support\Attribute;
 
@@ -12,35 +13,30 @@ class Message extends Attribute
     const TYPE_VOICE = 'audio';
     const TYPE_VIDEO = 'video';
     const TYPE_CMD = 'cmd';
-
     /**
      * Message type.
      *
      * @var string
      */
     protected $type;
-
     /**
-     * Target type
+     * Target type, The message send target.
      *
      * @var string
      */
     protected $target_type;
-
     /**
      * Message target user open id.
      *
-     * @var string
+     * @var string|array
      */
     protected $to;
-
     /**
      * Message sender open id.
      *
      * @var string
      */
     protected $from;
-
     /**
      * Extra attributes
      *
@@ -54,7 +50,9 @@ class Message extends Attribute
      * @var array
      */
     protected $properties = [];
-
+    /**
+     * @var array
+     */
     protected $alias = [
         'target' => 'to',
         'score' => 'target_type',
@@ -70,8 +68,14 @@ class Message extends Attribute
         parent::__construct(Arr::only($attributes, $this->properties));
     }
 
+    /**
+     * Build the message object to array.
+     *
+     * @return array
+     */
     public function build()
     {
+        $this->validateSelf();
         $body = (new MessageBuilder($this))->build();
 
         return $body;
@@ -109,7 +113,7 @@ class Message extends Attribute
      * @param string $property
      * @param mixed  $value
      *
-     * @return AbstractMessage
+     * @return $this
      */
     public function __set($property, $value)
     {
@@ -122,13 +126,23 @@ class Message extends Attribute
         return $this;
     }
 
+    /**
+     * Validate the data.
+     *
+     * @return bool
+     */
     protected function validateSelf()
     {
+        if (empty($this->to) || empty($this->from)) {
+            throw new InvalidArgumentException('Please set the to or from property.');
+        }
         return true;
     }
 
     /**
-     * {@inheritdoc}
+     * Return the array data.
+     *
+     * @return array
      */
     public function toArray()
     {

@@ -17,14 +17,14 @@ class File extends Rest
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     public function RestrictAccessMiddleware()
     {
         return function (callable $handler) {
             return function (RequestInterface $request, array $options) use ($handler) {
 
-                if (!$this->token->getToken()) {
+                if (!$this->accessToken->getToken()) {
                     return $handler($request, $options);
                 }
 
@@ -59,6 +59,13 @@ class File extends Rest
         return array_shift($this->parseResponse($response)['entities']);
     }
 
+    /**
+     * Return the resource web access url.
+     *
+     * @param string $uuid
+     *
+     * @return string
+     */
     public function url($uuid)
     {
         return (string) $this->http->buildUri("chatfiles/{$uuid}");

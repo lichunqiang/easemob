@@ -22,9 +22,9 @@ class AccessToken
      */
     protected $clientSecret;
     /**
-     * @var string|array Cache component
+     * @var \Doctrine\Common\Cache\Cache
      */
-    protected $cache = 'cache';
+    protected $cache;
     /**
      * @var string
      */
@@ -84,7 +84,7 @@ class AccessToken
     }
 
     /**
-     * @return array|string
+     * @return \Doctrine\Common\Cache\Cache
      */
     public function getCache()
     {

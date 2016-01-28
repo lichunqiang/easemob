@@ -17,11 +17,16 @@
     <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">src</directory>
-        <file>Config.php</file>
         <exclude>
           <directory>vendor</directory>
           <directory>tests</directory>
         </exclude>
       </whitelist>
     </filter>
+    <php>
+        <env name="enterpriseId" value="easemob-playground" />
+        <env name="appId" value="test1" />
+        <env name="clientId" value="YXA6wDs-MARqEeSO0VcBzaqg5A" />
+        <env name="clientSecret" value="YXA6JOMWlLap_YbI_ucz77j-4-mI0JA" />
+    </php>
 </phpunit>
