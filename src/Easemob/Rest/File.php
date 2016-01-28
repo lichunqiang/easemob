@@ -4,6 +4,15 @@ namespace light\Easemob\Rest;
 
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Class File
+ *
+ * ~~~
+ * $file = $easemob->file;
+ * $result = $file->upload('/home/1.png');
+ * $file_url = $file->url($result['uuid']);
+ * ~~~
+ */
 class File extends Rest
 {
     /**

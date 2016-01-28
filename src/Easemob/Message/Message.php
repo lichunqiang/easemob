@@ -133,8 +133,8 @@ class Message extends Attribute
      */
     protected function validateSelf()
     {
-        if (empty($this->to) || empty($this->from)) {
-            throw new InvalidArgumentException('Please set the to or from property.');
+        if (empty($this->to)) {
+            throw new InvalidArgumentException('Please set the "to" property.');
         }
         return true;
     }

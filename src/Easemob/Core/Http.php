@@ -65,6 +65,11 @@ class Http
         return $this->client;
     }
 
+    /**
+     * @param string $path
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
     public function buildUri($path)
     {
         return Psr7\Uri::resolve(Psr7\uri_for($this->baseUri), $path);

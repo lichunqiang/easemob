@@ -2,6 +2,7 @@
 
 namespace tests\Rest;
 
+use light\Easemob\Support\Log;
 use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 use tests\TestCase;
 
@@ -26,6 +27,9 @@ class UserTest extends TestCase
         parent::tearDown();
 
         $this->user->remove($this->testUsername);
+        foreach ($this->mockUsers() as $item) {
+            $this->user->remove($item['username']);
+        }
         $this->user = null;
     }
 
@@ -59,7 +63,7 @@ class UserTest extends TestCase
 
         $result = $this->user->register($users);
 
-        var_dump($result);
+        Log::debug('Registed', compact('result'));
 
         $this->assertEquals(count($users), count($result));
 
@@ -73,9 +77,9 @@ class UserTest extends TestCase
      */
     public function testAll($result)
     {
-        $result = $this->user->all(null, 2);
-        $this->assertNotFalse($result);
-        $this->assertTrue(array_key_exists('cursor', $result));
+        $fetched = $this->user->all(null, 2);
+        $this->assertNotFalse($fetched);
+        $this->assertTrue(array_key_exists('cursor', $fetched));
         $this->assertEquals(2, count($result['items']));
     }
 
@@ -94,38 +98,22 @@ class UserTest extends TestCase
 
     public function testResetPassword()
     {
-        $this->user->register(['username' => 'restpassword', 'password' => 123123123]);
-
-        $result = $this->user->resetPassword('restpassword', 123123123, 'cjandfsfas');
+        $result = $this->user->resetPassword($this->testUsername, 123123123, 'cjandfsfas');
 
         $this->assertTrue($result);
 
-        return 'restpassword';
     }
 
-    /**
-     * @depends testResetPassword
-     *
-     * @param string $username
-     *
-     * @return string
-     */
-    public function testUpdateNickName($username)
+    public function testUpdateNickName()
     {
-        $result = $this->user->updateNickname($username, 'LightTest');
+        $result = $this->user->updateNickname($this->testUsername, 'LightTest');
 
         $this->assertTrue($result);
-
-        return $username;
     }
 
-    /**
-     * @depends testUpdateNickName
-     * @param string $username
-     */
-    public function testIsOnline($username)
+    public function testIsOnline()
     {
-        $result = $this->user->isOnline($username);
+        $result = $this->user->isOnline($this->testUsername);
         $this->assertFalse($result);
     }
 

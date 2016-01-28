@@ -2,6 +2,8 @@
 
 namespace light\Easemob\Rest;
 
+use light\Easemob\Support\Log;
+
 /**
  * User operation
  */
@@ -104,16 +106,15 @@ class User extends Rest
      *
      * @param string $username
      * @param string $password
-     * @param string $newPassword
      *
-     * @return boolean
+     * @return bool
      */
-    public function resetPassword($username, $password, $newPassword)
+    public function resetPassword($username, $password)
     {
         $response = $this->put(
-            "users/{$username}/{$password}",
+            "users/{$username}/password",
             [
-                'body' => json_encode(['newpassword' => $newPassword]),
+                'body' => json_encode(['newpassword' => $password]),
             ]
         );
 
@@ -133,7 +134,7 @@ class User extends Rest
         $response = $this->put(
             "users/{$username}",
             [
-                'body' => ['nickname' => $nickname],
+                'body' => json_encode(['nickname' => $nickname]),
             ]
         );
 
@@ -233,7 +234,7 @@ class User extends Rest
         $response = $this->post(
             "users/{$username}/blocks/users",
             [
-                'username' => $users,
+                'usernames' => $users,
             ]
         );
 
@@ -296,6 +297,23 @@ class User extends Rest
     }
 
     /**
+     * @param string $username
+     * @param string $msg_id
+     *
+     * @return string|boolean delivered or undelivered
+     */
+    public function offlineMsgStatus($username, $msg_id)
+    {
+        $response = $this->get("users/{$username}/offline_msg_status/{$msg_id}");
+
+        if (false === $response) {
+            return false;
+        }
+
+        return $response['data'][$username];
+    }
+
+    /**
      * 禁用账户
      *
      * @param  string $username
@@ -304,7 +322,7 @@ class User extends Rest
      */
     public function disable($username)
     {
-        $response = $this->post("users/{$username}/deactive");
+        $response = $this->post("users/{$username}/deactivate");
 
         return $response !== false;
     }
@@ -318,7 +336,7 @@ class User extends Rest
      */
     public function enable($username)
     {
-        $response = $this->post("users/{$username}/active");
+        $response = $this->post("users/{$username}/activate");
 
         return $response !== false;
     }
@@ -338,6 +356,6 @@ class User extends Rest
             return false;
         }
 
-        return $response['data'][$username];
+        return $response['data']['result'];
     }
 }

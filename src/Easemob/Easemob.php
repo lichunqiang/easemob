@@ -25,6 +25,8 @@ use Pimple\ServiceProviderInterface;
  * Class Easemob
  *
  * @property \light\Easemob\Rest\User user
+ * @property \light\Easemob\Rest\Message message
+ * @property \light\Easemob\Rest\File file
  *
  * @package light\Easemob
  */

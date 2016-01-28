@@ -1,6 +1,4 @@
 build
-tests/runtime
-index.php
 phpunit.xml
 .idea
 vendor
