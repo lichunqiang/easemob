@@ -57,32 +57,6 @@ class UserTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testRegisterBatch()
-    {
-        $users = $this->mockUsers();
-
-        $result = $this->user->register($users);
-
-        Log::debug('Registed', compact('result'));
-
-        $this->assertEquals(count($users), count($result));
-
-        return $result;
-    }
-
-    /**
-     * @depends testRegisterBatch
-     *
-     * @param array $result
-     */
-    public function testAll($result)
-    {
-        $fetched = $this->user->all(null, 2);
-        $this->assertNotFalse($fetched);
-        $this->assertTrue(array_key_exists('cursor', $fetched));
-        $this->assertEquals(2, count($result['items']));
-    }
-
     /**
      * @depends testRegisterBatch
      *
@@ -96,34 +70,12 @@ class UserTest extends TestCase
         $this->assertEquals(2, count($result));
     }
 
-    public function testResetPassword()
-    {
-        $result = $this->user->resetPassword($this->testUsername, 123123123, 'cjandfsfas');
-
-        $this->assertTrue($result);
-
-    }
-
-    public function testUpdateNickName()
-    {
-        $result = $this->user->updateNickname($this->testUsername, 'LightTest');
-
-        $this->assertTrue($result);
-    }
-
-    public function testIsOnline()
-    {
-        $result = $this->user->isOnline($this->testUsername);
-        $this->assertFalse($result);
-    }
-
-
     public function mockUsers()
     {
         return [
-            ['username' => 'mock1', 'password' => 'mock1'],
-            ['username' => 'mock2', 'password' => 'mock2'],
-            ['username' => 'mock3', 'password' => 'mock3'],
+            ['username' => 'moccck1', 'password' => 'mock1'],
+            ['username' => 'moccck2', 'password' => 'mock2'],
+            ['username' => 'moccck3', 'password' => 'mock3'],
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace tests\Message;
 
+use light\Easemob\Exception\InvalidArgumentException;
+use light\Easemob\Message\Voice;
 use tests\TestCase;
 
 class VoiceTest extends TestCase
@@ -9,6 +11,26 @@ class VoiceTest extends TestCase
 
     public function testAsArr()
     {
-        $this->markTestIncomplete('to be done');
+        $video = new Voice([
+            'filename' => 'test.arm',
+            'length' => 12,
+            'secret' => 'fdsfsafs123dSDWaa',
+            'url' => 'http://www.tset.com'
+        ]);
+        $video->to = 1;
+        $video->from = 2;
+        $arr = $video->toArray();
+
+        $this->assertEquals('test.arm', $arr['filename']);
+        $this->assertArrayHasKey('secret', $arr);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testBadArgument()
+    {
+        $voice = new Voice(['filename' => 'test']);
+        $voice->toArray();
     }
 }

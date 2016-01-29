@@ -17,10 +17,12 @@
     <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">src</directory>
-        <exclude>
+      <exclude>
           <directory>vendor</directory>
           <directory>tests</directory>
-        </exclude>
+          <directory>src/Easemob/Support</directory>
+          <directory>src/Easemob/Providers</directory>
+      </exclude>
       </whitelist>
     </filter>
     <php>

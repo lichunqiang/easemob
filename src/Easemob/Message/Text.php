@@ -4,6 +4,11 @@ namespace light\Easemob\Message;
 
 use light\Easemob\Exception\InvalidArgumentException;
 
+/**
+ * Class Text
+ *
+ * @property string $msg
+ */
 class Text extends Message
 {
     /**

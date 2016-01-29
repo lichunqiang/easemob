@@ -190,7 +190,7 @@ class Http
     /**
      * Parse json data.
      *
-     * @param  string $body
+     * @param string|ResponseInterface $body
      *
      * @param bool $throws
      *
@@ -207,7 +207,9 @@ class Http
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             Log::error('Failed to parse JSON.', ['body' => $body]);
-            throw new HttpException('Failed to parse JSON.', json_last_error());
+            if ($throws) {
+                throw new HttpException('Failed to parse JSON.', json_last_error());
+            }
         }
 
         return $contents;

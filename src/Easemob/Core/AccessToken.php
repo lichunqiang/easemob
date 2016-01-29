@@ -92,7 +92,7 @@ class AccessToken
     }
 
     /**
-     * @param array|string $cache
+     * @param \Doctrine\Common\Cache\Cache $cache
      */
     public function setCache($cache)
     {
@@ -166,7 +166,7 @@ class AccessToken
             'client_secret' => $this->clientSecret,
         ]);
 
-        Log::debug('Get access token response', ['response' => $response]);
+        Log::debug('Get access token response', ['response' => (string)$response->getBody()]);
 
         $token = $this->http->parseJSON((string)$response->getBody());
 

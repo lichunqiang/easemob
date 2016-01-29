@@ -54,11 +54,16 @@ class MessageBuilder
         'chatrooms',
     ];
 
+    /**
+     * MessageBuilder constructor.
+     *
+     * @param Message $msg
+     */
     public function __construct(Message $msg)
     {
         $this->msg = $msg;
 
-        $this->to = $msg->to;
+        $this->to = (array)$msg->to;
         $this->from = $msg->from;
         if ($msg->scope) {
             $this->targetType = $msg->scope;
@@ -74,7 +79,7 @@ class MessageBuilder
      */
     public function to(array $target)
     {
-        $this->to = $target;
+        $this->msg->to = $this->to = $target;
         return $this;
     }
 
@@ -87,7 +92,7 @@ class MessageBuilder
      */
     public function from($from)
     {
-        $this->from = $from;
+        $this->msg->from = $this->from = $from;
         return $this;
     }
 

@@ -6,6 +6,13 @@ use light\Easemob\Exception\InvalidArgumentException;
 use light\Easemob\Support\Arr;
 use light\Easemob\Support\Attribute;
 
+/**
+ * Class Message
+ *
+ * @property string $scope
+ * @property array|string $to
+ * @property string $from
+ */
 class Message extends Attribute
 {
     const TYPE_TEXT = 'txt';
