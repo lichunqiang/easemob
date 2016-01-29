@@ -5,7 +5,7 @@ namespace light\Easemob\Rest;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Class File
+ * Class File.
  *
  * ~~~
  * $file = $easemob->file;

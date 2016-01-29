@@ -24,11 +24,7 @@ class User extends Rest
     {
         $response = $this->post('users', $users);
 
-        if (false === $response) {
-            return false;
-        }
-
-        return $response['entities'];
+        return $response ? $response['entities'] : false;
     }
 
     /**
@@ -64,11 +60,7 @@ class User extends Rest
     {
         $result = $this->get("users/{$username}");
 
-        if (false === $result) {
-            return false;
-        }
-
-        return array_shift($result['entities']);
+        return $result ? array_shift($result['entities']) : false;
     }
 
     /**
@@ -98,7 +90,7 @@ class User extends Rest
     {
         $result = $this->delete('users', ['query' => ['limit' => $count]]);
 
-        return $result['entities'];
+        return $result ? $result['entities'] : false;
     }
 
     /**
@@ -138,11 +130,7 @@ class User extends Rest
             ]
         );
 
-        if (false === $response) {
-            return false;
-        }
-
-        return !empty($response['entities']);
+        return $response ? !empty($response['entities']) : false;
     }
 
     /**
@@ -159,11 +147,7 @@ class User extends Rest
             "users/{$owner_name}/contacts/users/{$friend_username}"
         );
 
-        if (false === $response) {
-            return false;
-        }
-
-        return !empty($response['entities']);
+        return $response ? !empty($response['entities']) : false;
     }
 
     /**
@@ -178,11 +162,7 @@ class User extends Rest
     {
         $response = $this->post("users/{$owner_name}/contacts/users/{$friend_username}");
 
-        if (false === $response) {
-            return false;
-        }
-
-        return !empty($response['entities']);
+        return $response ? !empty($response['entities']) : false;
     }
 
     /**
@@ -196,11 +176,7 @@ class User extends Rest
     {
         $response = $this->get("users/{$username}/contacts/users");
 
-        if (false === $response) {
-            return false;
-        }
-
-        return $response['data'];
+        return $response ? $response['data'] : false;
     }
 
     /**
@@ -214,11 +190,7 @@ class User extends Rest
     {
         $response = $this->get("users/{$username}/blocks/users");
 
-        if (false === $response) {
-            return false;
-        }
-
-        return $response['data'];
+        return $response ? $response['data']: false;
     }
 
     /**
@@ -238,11 +210,7 @@ class User extends Rest
             ]
         );
 
-        if (false === $response) {
-            return false;
-        }
-
-        return $response['data'];
+        return $response ? $response['data'] : false;
     }
 
     /**
@@ -306,11 +274,7 @@ class User extends Rest
     {
         $response = $this->get("users/{$username}/offline_msg_status/{$msg_id}");
 
-        if (false === $response) {
-            return false;
-        }
-
-        return $response['data'][$username];
+        return $response ? $response['data'][$username] : false;
     }
 
     /**
@@ -352,10 +316,6 @@ class User extends Rest
     {
         $response = $this->get("users/{$username}/disconnect");
 
-        if (false === $response) {
-            return false;
-        }
-
-        return $response['data']['result'];
+        return $response ? $response['data']['result'] : false;
     }
 }

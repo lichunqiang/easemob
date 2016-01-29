@@ -27,6 +27,7 @@ use Pimple\ServiceProviderInterface;
  * @property \light\Easemob\Rest\User user
  * @property \light\Easemob\Rest\Message message
  * @property \light\Easemob\Rest\File file
+ * @property \light\Easemob\Rest\Chat chat
  *
  * @package light\Easemob
  */

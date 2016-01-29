@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class Rest
+ * Class Rest.
  *
  * @method post($uri, $options = [])
  * @method get($uri, $options = [])

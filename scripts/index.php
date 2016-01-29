@@ -1,26 +1,10 @@
 <?php
-require '../vendor/autoload.php';
-
-
-$config = [
-    'enterpriseId' => 'easemob-playground',
-    'appId' => 'test1',
-    'clientId' => 'YXA6wDs-MARqEeSO0VcBzaqg5A',
-    'clientSecret' => 'YXA6JOMWlLap_YbI_ucz77j-4-mI0JA',
-    'cachePath' => __DIR__ . '/tests/runtime',
-    'log' => [
-        'file' => __DIR__ . '/tests/runtime/easemob.log',
-        'level' => \Monolog\Logger::DEBUG
-    ]
-
-];
-$easemob = new \light\Easemob\Easemob($config);
-
+require 'bootstrap.php';
 
 $user = $easemob->user;
 
 //var_dump($user->all());
-//var_dump($user->register(['username' => 1, 'password' => 12313123, 'nickname' => 'test']));
+var_dump($user->register(['username' => 333, 'password' => 12313123, 'nickname' => 'test']));
 //var_dump($user->one(1));
 //var_dump($user->updateNickname(1, 'testUpdate'));
 //var_dump($user->one(1));
@@ -53,7 +37,7 @@ $user = $easemob->user;
 //var_dump($user->disconnect('user1'));
 
 
-var_dump($user->offlineMsgCount('user1'));
+//var_dump($user->offlineMsgCount('user1'));
 
 $message = $easemob->message;
 
