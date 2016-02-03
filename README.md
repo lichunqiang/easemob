@@ -33,7 +33,45 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-TBD
+```
+use Monolog\Logger;
+
+$easemob = new Easemob([
+  'enterpriseId' => 'enterpriseID',
+  'appId' => 'appID',
+  'clientId' => 'clientID',
+  'clientSecret' => 'clientSecret',
+  'log' => [
+      'file' => '/var/easemob.log',
+      'level' =>Logger::DEBUG,
+  ],
+]);
+```
+
+### 用户系统
+
+```
+$user = $easemob->user;
+```
+
+* 注册单个用户 `$user->register(['username' => 11, 'password' => 'password'])`
+* 注册多个用户 `$user->register([['username' => 1, 'password' => 'password'], ['username' => 2, 'password' => 'password'])`
+* 获取单个用户 `$user->one(1)`
+* 获取所有用户 `$user->all(/*$cursor*//*, $limit = 20*/)`
+* 删除单个用户 `$user->remove(1)`
+* 删除多个用户 `$user->batchRemove(/*$count = 100*/)`
+...
+
+### 消息系统
+
+```
+$message = $user->message;
+
+//发送文本消息
+$text = new \light\Easemob\Message\Text(['msg' => 'hello']);
+$message->send($text);
+```
+....
 
 
 License
