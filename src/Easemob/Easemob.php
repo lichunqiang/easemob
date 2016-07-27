@@ -28,6 +28,8 @@ use Pimple\ServiceProviderInterface;
  * @property \light\Easemob\Rest\Message message
  * @property \light\Easemob\Rest\File file
  * @property \light\Easemob\Rest\Chat chat
+ * @property \light\Easemob\Rest\ChatRoom chatroom
+ * @property \light\Easemob\Rest\Group group
  *
  * @package light\Easemob
  */
