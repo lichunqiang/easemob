@@ -1,15 +1,22 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Core;
 
 use Doctrine\Common\Cache\FilesystemCache;
 use light\Easemob\Exception\HttpException;
-use light\Easemob\Exception\InvalidArgumentException;
 use light\Easemob\Support\Log;
 
 /**
  * Get the access token.
- *
  */
 class AccessToken
 {
@@ -43,8 +50,7 @@ class AccessToken
         $clientSecret,
         Http $http,
         $cache = null
-    )
-    {
+    ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->http = $http;
@@ -115,23 +121,21 @@ class AccessToken
         $this->http = $http;
     }
 
-
     /**
-     * Get the access token
+     * Get the access token.
      *
      * @param bool $forceRefresh
      *
-     * @return string
      * @throws HttpException
+     *
+     * @return string
      */
     public function getToken($forceRefresh = false)
     {
         if (!$this->token) {
-
             $this->token = $this->getCache()->fetch($this->cacheKeyPrefix);
 
             if ($forceRefresh || !$this->token) {
-
                 $token = $this->getTokenFromServer();
                 Log::debug('Renew the access token', [
                     'token' => $token,
@@ -151,11 +155,12 @@ class AccessToken
     }
 
     /**
-     * Internal fetch token logic
+     * Internal fetch token logic.
      *
-     * @return array
      * @throws HttpException
      * @throws \light\Easemob\Exception\HttpException
+     *
+     * @return array
      */
     protected function getTokenFromServer()
     {
@@ -166,13 +171,14 @@ class AccessToken
             'client_secret' => $this->clientSecret,
         ]);
 
-        Log::debug('Get access token response', ['response' => (string)$response->getBody()]);
+        Log::debug('Get access token response', ['response' => (string) $response->getBody()]);
 
-        $token = $this->http->parseJSON((string)$response->getBody());
+        $token = $this->http->parseJSON((string) $response->getBody());
 
         if (!isset($token['access_token'])) {
             throw new HttpException('Request AccessToken fail.' . json_encode($token, JSON_UNESCAPED_UNICODE));
         }
+
         return $token;
     }
 }

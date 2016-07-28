@@ -9,8 +9,8 @@
  * with this source code in the file LICENSE.
  */
 
-require 'bootstrap.php';
+namespace light\Easemob\Exception;
 
-$chat = $easemob->chat;
-
-var_dump($chat->history());
+class MethodNotFoundException extends \Exception
+{
+}

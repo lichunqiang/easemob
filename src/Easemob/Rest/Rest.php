@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Rest;
 
 use light\Easemob\Core\AccessToken;
@@ -74,8 +83,9 @@ abstract class Rest
      * @param $name
      * @param $arguments
      *
-     * @return mixed
      * @throws MethodNotFoundException
+     *
+     * @return mixed
      */
     public function __call($name, $arguments)
     {
@@ -90,13 +100,14 @@ abstract class Rest
     }
 
     /**
-     * Parse response
+     * Parse response.
      *
      * @param ResponseInterface $response
      *
-     * @return mixed
      * @throws EasemobException
      * @throws \light\Easemob\Exception\HttpException
+     *
+     * @return mixed
      */
     protected function parseResponse(ResponseInterface $response)
     {
@@ -106,8 +117,9 @@ abstract class Rest
             Log::error('Got an error reponse:', [
                 '__class__' => get_called_class(),
                 'code' => $statusCode,
-                'responseBody' => (string)$response->getBody(),
+                'responseBody' => (string) $response->getBody(),
             ]);
+
             return false;
         }
         $result = $this->http->parseJSON($response);
@@ -121,6 +133,7 @@ abstract class Rest
             ]);
             throw new EasemobException($result['error_description']);
         }
+
         return $result;
     }
 

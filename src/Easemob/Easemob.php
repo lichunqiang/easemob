@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob;
 
 use Doctrine\Common\Cache\Cache;
@@ -13,7 +22,6 @@ use light\Easemob\Providers\FileProvider;
 use light\Easemob\Providers\GroupProvider;
 use light\Easemob\Providers\MessageProvider;
 use light\Easemob\Providers\UserProvider;
-use light\Easemob\Rest\Rest;
 use light\Easemob\Support\Log;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
@@ -22,7 +30,7 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 /**
- * Class Easemob
+ * Class Easemob.
  *
  * @property \light\Easemob\Rest\User user
  * @property \light\Easemob\Rest\Message message
@@ -30,15 +38,13 @@ use Pimple\ServiceProviderInterface;
  * @property \light\Easemob\Rest\Chat chat
  * @property \light\Easemob\Rest\ChatRoom chatroom
  * @property \light\Easemob\Rest\Group group
- *
- * @package light\Easemob
  */
 class Easemob extends Container
 {
     const BASE_URL = 'https://a1.easemob.com';
 
     /**
-     * Core service providers
+     * Core service providers.
      *
      * @var array
      */
@@ -114,7 +120,7 @@ class Easemob extends Container
     protected function registerProviders()
     {
         foreach ($this->coreProviders as $provider) {
-            $this->register(new $provider);
+            $this->register(new $provider());
         }
     }
 
@@ -123,7 +129,6 @@ class Easemob extends Container
      */
     protected function registerCoreProviders()
     {
-
         $this['http'] = function () {
             return new Http($this->api);
         };
@@ -143,7 +148,7 @@ class Easemob extends Container
     }
 
     /**
-     * Init logger
+     * Init logger.
      */
     private function initializeLogger()
     {
@@ -173,7 +178,7 @@ class Easemob extends Container
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set($name, $value)
     {

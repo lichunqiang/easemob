@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Rest;
 
 /**
@@ -33,8 +42,8 @@ class ChatRoom extends Rest
      * @param string $name
      * @param string $description
      * @param string $owner
-     * @param int $maxusers
-     * @param array $members
+     * @param int    $maxusers
+     * @param array  $members
      *
      * @return bool|string Room id
      */
@@ -44,21 +53,20 @@ class ChatRoom extends Rest
         $owner,
         $maxusers = 200,
         array $members = []
-    )
-    {
+    ) {
         $args = compact('name', 'description', 'owner', 'maxusers', 'members');
         $response = $this->post('chatrooms', [
-            'body' => json_encode($args)
+            'body' => json_encode($args),
         ]);
 
         return $response ? $response['data']['id'] : false;
     }
 
     /**
-     * @param string $room_id
+     * @param string      $room_id
      * @param null|string $name
      * @param null|string $description
-     * @param null|integer $maxusers
+     * @param null|int    $maxusers
      *
      * @return bool|array
      */
@@ -114,7 +122,7 @@ class ChatRoom extends Rest
 
     /**
      * @param string $room_id
-     * @param array $users
+     * @param array  $users
      *
      * @return bool|array
      */
@@ -148,7 +156,7 @@ class ChatRoom extends Rest
 
     /**
      * @param string $room_id
-     * @param array $users
+     * @param array  $users
      *
      * @return bool|array
      */

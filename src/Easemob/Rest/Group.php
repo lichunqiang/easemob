@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Rest;
 
 class Group extends Rest
@@ -8,7 +17,7 @@ class Group extends Rest
      * Get all groups.
      *
      * @param null|string $cursor
-     * @param int $limit
+     * @param int         $limit
      *
      * @return array|bool
      */
@@ -32,7 +41,7 @@ class Group extends Rest
     }
 
     /**
-     * Fetch the group details
+     * Fetch the group details.
      *
      * @return bool|array
      */
@@ -53,9 +62,9 @@ class Group extends Rest
      * @param $desc
      * @param $owner
      * @param array $members
-     * @param bool $is_public
-     * @param int $max_users
-     * @param bool $approval
+     * @param bool  $is_public
+     * @param int   $max_users 默认值200，最大值2000
+     * @param bool  $approval  是否需要批准
      *
      * @return bool|array ['groupid' => 12312312]
      */
@@ -67,8 +76,7 @@ class Group extends Rest
         $is_public = false,
         $max_users = 200,
         $approval = false
-    )
-    {
+    ) {
         $response = $this->post('chatgroups', [
             'body' => json_encode([
                 'groupname' => $name,
@@ -87,10 +95,10 @@ class Group extends Rest
     /**
      * Update group.
      *
-     * @param string $group_id
+     * @param string      $group_id
      * @param null|string $groupname
      * @param null|string $description
-     * @param null|integer $maxusers
+     * @param null|int    $maxusers
      *
      * @return bool
      */
@@ -154,7 +162,7 @@ class Group extends Rest
      * Join multiple users to a group.
      *
      * @param string $group_id
-     * @param array $users
+     * @param array  $users
      *
      * @return bool|array
      */
@@ -165,6 +173,7 @@ class Group extends Rest
                 'usernames' => $users,
             ]),
         ]);
+
         return $response ? $response['data'] : false;
     }
 
@@ -185,7 +194,7 @@ class Group extends Rest
 
     /**
      * @param string $group_id
-     * @param array $users
+     * @param array  $users
      *
      * @return bool|array
      */
@@ -226,6 +235,7 @@ class Group extends Rest
                 'newowner' => $username,
             ]),
         ]);
+
         return $response ? $response['data']['newowner'] : false;
     }
 
@@ -260,7 +270,7 @@ class Group extends Rest
 
     /**
      * @param string $group_id
-     * @param array $users
+     * @param array  $users
      *
      * @return bool|array
      */
@@ -290,7 +300,7 @@ class Group extends Rest
 
     /**
      * @param string $group_id
-     * @param array $users
+     * @param array  $users
      *
      * @return bool|array
      */
@@ -301,5 +311,4 @@ class Group extends Rest
 
         return $response ? $response['data'] : false;
     }
-
 }

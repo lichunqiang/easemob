@@ -1,18 +1,28 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Rest;
 
 class Chat extends Rest
 {
     /**
-     * 获取历史聊天记录
+     * 获取历史聊天记录.
      *
      * @param null|string $cursor
      * @param null|string $sql
-     * @param  integer $limit
+     * @param int         $limit
+     *
+     * @throws \light\Easemob\Exception\EasemobException
      *
      * @return array
-     * @throws \light\Easemob\Exception\EasemobException
      */
     public function history($cursor = null, $sql = null, $limit = 20)
     {

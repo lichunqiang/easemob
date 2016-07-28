@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Message;
 
 use light\Easemob\Exception\InvalidArgumentException;
@@ -7,7 +16,7 @@ use light\Easemob\Exception\InvalidArgumentException;
 class MessageBuilder
 {
     /**
-     * Message send targets
+     * Message send targets.
      *
      * @var array
      */
@@ -23,21 +32,21 @@ class MessageBuilder
     protected $from;
 
     /**
-     * Message object
+     * Message object.
      *
      * @var Message
      */
     protected $msg;
 
     /**
-     * target type, default is `users`
+     * target type, default is `users`.
      *
      * @var string
      */
     protected $targetType = 'users';
 
     /**
-     * Extra attributes
+     * Extra attributes.
      *
      * @var array
      */
@@ -63,7 +72,7 @@ class MessageBuilder
     {
         $this->msg = $msg;
 
-        $this->to = (array)$msg->to;
+        $this->to = (array) $msg->to;
         $this->from = $msg->from;
         if ($msg->scope) {
             $this->targetType = $msg->scope;
@@ -73,37 +82,39 @@ class MessageBuilder
     /**
      * Set target users.
      *
-     * @param  array  $target
+     * @param array $target
      *
      * @return $this
      */
     public function to(array $target)
     {
         $this->msg->to = $this->to = $target;
+
         return $this;
     }
 
     /**
      * Set from user.
      *
-     * @param  string $from
+     * @param string $from
      *
      * @return $this
      */
     public function from($from)
     {
         $this->msg->from = $this->from = $from;
+
         return $this;
     }
 
     /**
-     * Set target_type
+     * Set target_type.
      *
      * @param string $type
      *
-     * @return $this
-     *
      * @throws InvalidArgumentException
+     *
+     * @return $this
      */
     public function setTargetType($type)
     {
@@ -111,6 +122,7 @@ class MessageBuilder
             throw new InvalidArgumentException("{$type} is not supported.");
         }
         $this->targetType = $type;
+
         return $this;
     }
 

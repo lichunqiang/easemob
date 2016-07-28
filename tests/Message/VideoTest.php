@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace tests\Message;
 
 use light\Easemob\Exception\InvalidArgumentException;
@@ -17,13 +26,13 @@ class VideoTest extends TestCase
             'secret' => 'fdsfsafs123dSDWaa',
             'file_length' => 123,
             'thumb_secret' => 'dsad1231dsadsASddas',
-            'url' => 'http://www.tset.com'
+            'url' => 'http://www.tset.com',
         ]);
         $video->to = 1;
         $video->from = 2;
         $arr = $video->toArray();
 
-        $this->assertEquals('test.arm', $arr['filename']);
+        $this->assertSame('test.arm', $arr['filename']);
         $this->assertArrayHasKey('thumb_secret', $arr);
     }
 

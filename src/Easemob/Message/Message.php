@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Message;
 
 use light\Easemob\Exception\InvalidArgumentException;
@@ -7,7 +16,7 @@ use light\Easemob\Support\Arr;
 use light\Easemob\Support\Attribute;
 
 /**
- * Class Message
+ * Class Message.
  *
  * @property string $scope
  * @property array|string $to
@@ -45,7 +54,7 @@ class Message extends Attribute
      */
     protected $from;
     /**
-     * Extra attributes
+     * Extra attributes.
      *
      * @var array
      */
@@ -143,6 +152,7 @@ class Message extends Attribute
         if (empty($this->to)) {
             throw new InvalidArgumentException('Please set the "to" property.');
         }
+
         return true;
     }
 

@@ -1,9 +1,16 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace tests\Rest;
 
-use light\Easemob\Support\Log;
-use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 use tests\TestCase;
 
 class UserTest extends TestCase
@@ -47,8 +54,7 @@ class UserTest extends TestCase
         $this->assertTrue(array_key_exists('uuid', $result[0]));
 
         $new = $this->user->one($this->testUsername);
-        $this->assertEquals($new['uuid'], $result[0]['uuid']);
-
+        $this->assertSame($new['uuid'], $result[0]['uuid']);
     }
 
     public function testNoRegisterUser()
@@ -67,7 +73,7 @@ class UserTest extends TestCase
         $result = $this->user->batchRemove(2);
 
         $this->assertNotFalse($result);
-        $this->assertEquals(2, count($result));
+        $this->assertSame(2, count($result));
     }
 
     public function mockUsers()

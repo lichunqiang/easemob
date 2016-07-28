@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Core;
 
 use GuzzleHttp\Client as HttpClient;
@@ -32,7 +41,7 @@ class Http
     }
 
     /**
-     * Set http client
+     * Set http client.
      *
      * @param HttpClient $client
      *
@@ -46,7 +55,7 @@ class Http
     }
 
     /**
-     * Get http client
+     * Get http client.
      *
      * @return \GuzzleHttp\Client
      */
@@ -62,6 +71,7 @@ class Http
                 ],
             ]);
         }
+
         return $this->client;
     }
 
@@ -76,11 +86,11 @@ class Http
     }
 
     /**
-     * Make request
+     * Make request.
      *
-     * @param  string $url
-     * @param  string $method
-     * @param  array $options
+     * @param string $url
+     * @param string $method
+     * @param array  $options
      *
      * @return mixed
      */
@@ -97,8 +107,8 @@ class Http
             Log::error('Http Exception', [
                 'uri' => $url,
                 'method' => $method,
-                'response' => (string)$response->getBody(),
-                'request' => (string)$e->getRequest()->getUri(),
+                'response' => (string) $response->getBody(),
+                'request' => (string) $e->getRequest()->getUri(),
             ]);
         }
 
@@ -106,10 +116,10 @@ class Http
     }
 
     /**
-     * Send a get request
+     * Send a get request.
      *
-     * @param  string $url
-     * @param  array $options
+     * @param string $url
+     * @param array  $options
      *
      * @return mixed
      */
@@ -119,24 +129,25 @@ class Http
     }
 
     /**
-     * Send a post request
+     * Send a post request.
      *
-     * @param  string $url
-     * @param  array $options
+     * @param string $url
+     * @param array  $options
      *
      * @return mixed
      */
     public function post($url, $options = [])
     {
         $options = is_array($options) ? json_encode($options, JSON_UNESCAPED_UNICODE) : $options;
+
         return $this->request($url, 'POST', ['body' => $options]);
     }
 
     /**
-     * Send a delete request
+     * Send a delete request.
      *
-     * @param  string $url
-     * @param  array $options
+     * @param string $url
+     * @param array  $options
      *
      * @return mixed
      */
@@ -146,10 +157,10 @@ class Http
     }
 
     /**
-     * Send a put request
+     * Send a put request.
      *
-     * @param  string $url
-     * @param  array $options
+     * @param string $url
+     * @param array  $options
      *
      * @return mixed
      */
@@ -162,10 +173,9 @@ class Http
      * Upload file.
      *
      * @param string $url
-     * @param array $files
-     * @param array $form
-     *
-     * @param array $queries
+     * @param array  $files
+     * @param array  $form
+     * @param array  $queries
      *
      * @return ResponseInterface
      */
@@ -191,11 +201,11 @@ class Http
      * Parse json data.
      *
      * @param string|ResponseInterface $body
+     * @param bool                     $throws
      *
-     * @param bool $throws
+     * @throws HttpException
      *
      * @return array
-     * @throws HttpException
      */
     public function parseJSON($body, $throws = true)
     {
@@ -232,6 +242,7 @@ class Http
     public function clearMiddlewares()
     {
         $this->middlewares = [];
+
         return $this;
     }
 

@@ -1,24 +1,31 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Rest;
 
-use light\Easemob\Support\Log;
-
 /**
- * User operation
+ * User operation.
  */
 class User extends Rest
 {
     /**
-     * Register users
+     * Register users.
      *
      * 通过「授权注册」的方式注册用户.
      *
-     * @param  array $users
+     * @param array $users
      *
      *  [['username' => '123123', 'password' => 'password', 'nickname' => 'niamee']]
      *
-     * @return array|boolean The entities of registed user
+     * @return array|bool The entities of registed user
      */
     public function register($users)
     {
@@ -30,10 +37,10 @@ class User extends Rest
     /**
      * Fetch all user records.
      *
-     * @param  string|null $cursor
-     * @param  integer $limit
+     * @param string|null $cursor
+     * @param int         $limit
      *
-     * @return array|boolean
+     * @return array|bool
      */
     public function all($cursor = null, $limit = 20)
     {
@@ -50,9 +57,9 @@ class User extends Rest
     }
 
     /**
-     * 获取单个用户信息
+     * 获取单个用户信息.
      *
-     * @param  string $username
+     * @param string $username
      *
      * @return mixed
      */
@@ -64,11 +71,11 @@ class User extends Rest
     }
 
     /**
-     * 删除单个用户
+     * 删除单个用户.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return boolean
+     * @return bool
      */
     public function remove($username)
     {
@@ -82,9 +89,9 @@ class User extends Rest
      *
      * 需要通过返回值来确定哪些用户被删除了.
      *
-     * @param  integer $count 删除个数
+     * @param int $count 删除个数
      *
-     * @return array|boolean  成功删除用户信息列表
+     * @return array|bool 成功删除用户信息列表
      */
     public function batchRemove($count = 100)
     {
@@ -114,12 +121,12 @@ class User extends Rest
     }
 
     /**
-     * 更新用户昵称
+     * 更新用户昵称.
      *
-     * @param  string $username
-     * @param  string $nickname
+     * @param string $username
+     * @param string $nickname
      *
-     * @return boolean
+     * @return bool
      */
     public function updateNickname($username, $nickname)
     {
@@ -134,12 +141,12 @@ class User extends Rest
     }
 
     /**
-     * 为用户添加好友
+     * 为用户添加好友.
      *
-     * @param string $owner_name 用户名
+     * @param string $owner_name      用户名
      * @param string $friend_username 被添加为好友的用户名
      *
-     * @return boolean
+     * @return bool
      */
     public function addFriend($owner_name, $friend_username)
     {
@@ -151,12 +158,12 @@ class User extends Rest
     }
 
     /**
-     * 解除用户好友关系
+     * 解除用户好友关系.
      *
-     * @param  string $owner_name
-     * @param  string $friend_username
+     * @param string $owner_name
+     * @param string $friend_username
      *
-     * @return boolean
+     * @return bool
      */
     public function removeFriend($owner_name, $friend_username)
     {
@@ -166,11 +173,11 @@ class User extends Rest
     }
 
     /**
-     * 查看某个用户的好友
+     * 查看某个用户的好友.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return array|boolean 好友用户名列表
+     * @return array|bool 好友用户名列表
      */
     public function friends($username)
     {
@@ -180,26 +187,26 @@ class User extends Rest
     }
 
     /**
-     * 查看某一个IM用户的黑名单
+     * 查看某一个IM用户的黑名单.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return array|boolean 黑名单中的用户名列表
+     * @return array|bool 黑名单中的用户名列表
      */
     public function blocks($username)
     {
         $response = $this->get("users/{$username}/blocks/users");
 
-        return $response ? $response['data']: false;
+        return $response ? $response['data'] : false;
     }
 
     /**
-     * 为用户加入黑名单
+     * 为用户加入黑名单.
      *
-     * @param  string $username
-     * @param  array $users 需要加入黑名单中的用户名
+     * @param string $username
+     * @param array  $users    需要加入黑名单中的用户名
      *
-     * @return array|boolean 已经加入到黑名单中的用户
+     * @return array|bool 已经加入到黑名单中的用户
      */
     public function block($username, $users)
     {
@@ -214,12 +221,12 @@ class User extends Rest
     }
 
     /**
-     * 解除黑名单
+     * 解除黑名单.
      *
-     * @param  string $username
-     * @param  string $target
+     * @param string $username
+     * @param string $target
      *
-     * @return boolean
+     * @return bool
      */
     public function unblock($username, $target)
     {
@@ -231,9 +238,9 @@ class User extends Rest
     /**
      * 查看用户是否在线
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return boolean
+     * @return bool
      */
     public function isOnline($username)
     {
@@ -247,11 +254,11 @@ class User extends Rest
     }
 
     /**
-     * 获取用户离线消息数
+     * 获取用户离线消息数.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return integer
+     * @return int
      */
     public function offlineMsgCount($username)
     {
@@ -261,14 +268,14 @@ class User extends Rest
             return false;
         }
 
-        return (int)$response['data'][$username];
+        return (int) $response['data'][$username];
     }
 
     /**
      * @param string $username
      * @param string $msg_id
      *
-     * @return string|boolean delivered or undelivered
+     * @return string|bool delivered or undelivered
      */
     public function offlineMsgStatus($username, $msg_id)
     {
@@ -278,11 +285,11 @@ class User extends Rest
     }
 
     /**
-     * 禁用账户
+     * 禁用账户.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return boolean
+     * @return bool
      */
     public function disable($username)
     {
@@ -292,11 +299,11 @@ class User extends Rest
     }
 
     /**
-     * 解禁账户
+     * 解禁账户.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return boolean
+     * @return bool
      */
     public function enable($username)
     {
@@ -306,11 +313,11 @@ class User extends Rest
     }
 
     /**
-     * 强制下线用户
+     * 强制下线用户.
      *
-     * @param  string $username
+     * @param string $username
      *
-     * @return boolean
+     * @return bool
      */
     public function disconnect($username)
     {

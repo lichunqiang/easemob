@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace light\Easemob\Support;
 
 use Monolog\Handler\ErrorLogHandler;
@@ -7,7 +16,7 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 /**
- * Log
+ * Log.
  *
  * @method static debug($message, array $context)
  * @method static error($message, array $context)
@@ -43,6 +52,7 @@ class Log
     {
         $logger = new Logger('easemob');
         $logger->pushHandler(new ErrorLogHandler());
+
         return $logger;
     }
 }

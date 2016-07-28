@@ -1,12 +1,15 @@
 <?php
 
-namespace tests\Message;
+/*
+ * This file is part of the light/easemob.
+ *
+ * (c) lichunqiang <light-li@hotmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
-use light\Easemob\Message\Cmd;
-use light\Easemob\Message\Image;
-use light\Easemob\Message\Text;
-use light\Easemob\Message\Video;
-use light\Easemob\Message\Voice;
+namespace tests\Message;
 
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
