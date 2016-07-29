@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the light/easemob.
- *
- * (c) lichunqiang <light-li@hotmail.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
 namespace light\Easemob\Rest;
 
 class Group extends Rest
@@ -78,15 +69,15 @@ class Group extends Rest
         $approval = false
     ) {
         $response = $this->post('chatgroups', [
-            'body' => json_encode([
+            [
                 'groupname' => $name,
                 'desc' => $desc,
                 'public' => $is_public,
                 'maxusers' => $max_users,
                 'approval' => $approval,
-                'owner' => $owner,
+                'owner' => (string) $owner,
                 'members' => $members,
-            ]),
+            ],
         ]);
 
         return $response ? $response['data'] : false;
