@@ -167,7 +167,7 @@ class User extends Rest
      */
     public function removeFriend($owner_name, $friend_username)
     {
-        $response = $this->post("users/{$owner_name}/contacts/users/{$friend_username}");
+        $response = $this->delete("users/{$owner_name}/contacts/users/{$friend_username}");
 
         return $response ? !empty($response['entities']) : false;
     }
